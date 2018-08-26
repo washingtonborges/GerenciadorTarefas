@@ -5,11 +5,9 @@
         type: "POST"
         ,
         data: JSON.stringify({
-            Usuario: {
-                Nome: $("#username").val()
+                nome: $("#username").val()                
                 ,
-                Senha: $("#password").val()
-            }
+                senha: $("#password").val()
         })
         ,
         contentType: 'application/json; charset=utf-8'
