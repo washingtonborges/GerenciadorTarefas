@@ -49,5 +49,12 @@ namespace GerenciadorTarefas.Controllers
             }
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return View("TelaLogin");
+        }
     }
+
 }
