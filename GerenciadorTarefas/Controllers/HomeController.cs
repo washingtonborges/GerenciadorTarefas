@@ -12,8 +12,15 @@ namespace GerenciadorTarefas.Controllers
     public class HomeController : Controller
     {
         private GerenciadorTarefasContext db = new GerenciadorTarefasContext();
-  
+
+        // GET: /Home/
         public ActionResult Index()
+        {
+            return RedirectToAction("Index", "Tarefas");
+        }
+
+        //GET: /TelaLogin/
+        public ActionResult TelaLogin()
         {
             return View();
         }
