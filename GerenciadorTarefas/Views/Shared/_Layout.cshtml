@@ -9,6 +9,40 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <nav class="navbar-menu navbar fixed-top navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/">
+            Gerenciador de Tarefas
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Tarefas">Tarefas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Usuarios">Usuários</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Home/Logout"><span class="oi oi-power-standby"></span> Sair</a>
+                </li>
+            </ul>
+            <ul class="navbar-profile nav navbar-nav navbar-right">
+                <li>
+                    <div class="dropleft">
+                        <a class="navbar-brand dropdown" id="dropdownProfile" data-toggle="dropdown" href="#">
+                            Admin
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownProfile">
+                            <h6 class="dropdown-header">Olá, Admin</h6>
+                            <a class="dropdown-item" href="#">Perfil</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
     </div>
