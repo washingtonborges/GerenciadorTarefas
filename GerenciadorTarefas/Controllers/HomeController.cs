@@ -12,7 +12,7 @@ namespace GerenciadorTarefas.Controllers
     public class HomeController : Controller
     {
         private GerenciadorTarefasContext db = new GerenciadorTarefasContext();
-
+  
         public ActionResult Index()
         {
             return View();
@@ -26,7 +26,8 @@ namespace GerenciadorTarefas.Controllers
 
                 if (consulta.Any())
                 {
-                    return Json("OK", JsonRequestBehavior.AllowGet);
+                    var persistCookie = true;
+                    FormsAuthentication.SetAuthCookie(nome, persistCookie);
                 }
                 else
                 {
@@ -38,6 +39,7 @@ namespace GerenciadorTarefas.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 return Json(e.Message, JsonRequestBehavior.AllowGet);
             }
+            return Json("OK", JsonRequestBehavior.AllowGet);
         }
     }
 }
