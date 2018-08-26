@@ -14,6 +14,7 @@ namespace GerenciadorTarefas.Controllers
         private GerenciadorTarefasContext db = new GerenciadorTarefasContext();
 
         // GET: /Home/
+        [Authorize]
         public ActionResult Index()
         {
             return RedirectToAction("Index", "Tarefas");
