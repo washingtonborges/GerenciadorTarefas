@@ -11,7 +11,10 @@
     {
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Titulo)</h5>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="concluido-@item.TarefaId" data-id="@item.TarefaId">
+                    <label class="custom-control-label" for="concluido-@item.TarefaId">@Html.DisplayFor(modelItem => item.Titulo)</label>
+                </div>
                 <button class="btn btn-light edit" data-id="@item.TarefaId">Editar</button>
                 <button class="btn btn-light delete" data-id="@item.TarefaId">Apagar</button>
             </div>
