@@ -4,11 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Usuários</h2>
+<button class="btn btn-light create">Novo Usuário</button>
+<br /><br />
 <table class="table">
     <tr>
         <th>
@@ -20,32 +18,53 @@
         <th>
             @Html.DisplayNameFor(model => model.Permissao)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Senha)
-        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Permissao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Senha)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UsuarioId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UsuarioId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UsuarioId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Permissao)
+            </td>
+            <td>
+                <button class="btn btn-light edit" data-id="@item.UsuarioId">Editar</button>
+                <button class="btn btn-light delete" data-id="@item.UsuarioId">Apagar</button>
+            </td>
+        </tr>
+    }
 
 </table>
+
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="TituloModal" aria-hidden="true">
+</div>
+@section scripts{
+    <script>
+            $(function () {
+                $(".edit").click(function () {
+                    var id = $(this).attr("data-id");
+                    $("#modal").load("/Usuarios/Edit?id=" + id, function () {
+                        $("#modal").modal('show');
+                    })
+                });
+                $(".create").click(function () {
+                    $("#modal").load("/Usuarios/Create", function () {
+                        $("#modal").modal('show');
+                    })
+                });
+                $(".delete").click(function () {
+                    var id = $(this).attr("data-id");
+                    $("#modal").load("/Usuarios/Delete?id=" + id, function () {
+                        $("#modal").modal('show');
+                    })
+                });
+
+            })
+    </script>
+}
