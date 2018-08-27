@@ -2,18 +2,33 @@
 
 @{
     ViewBag.Title = "Tarefas";
+    var inputChecked = "";
+    var classeTexoRiscado = "";
 }
 
 <h2>Tarefas</h2>
 <button class="btn btn-light create">Nova Tarefa</button>
 <div class="row">
+
     @foreach (var item in Model)
     {
         <div class="card">
             <div class="card-body">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="concluido-@item.TarefaId" data-id="@item.TarefaId">
-                    <label class="custom-control-label" for="concluido-@item.TarefaId">@Html.DisplayFor(modelItem => item.Titulo)</label>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        if (item.Concluida) {
+                            inputChecked = "checked";
+                            classeTexoRiscado = "texto-riscado";
+                        } else {
+                            inputChecked = "";
+                            classeTexoRiscado = "";
+                        }
+                        <input type="checkbox" value="@item.Concluida.ToString()"  @inputChecked class="custom-control-input" id="concluido-@item.TarefaId" data-id="@item.TarefaId" >
+                        <label class="custom-control-label  @classeTexoRiscado" for="concluido-@item.TarefaId">@Html.DisplayFor(modelItem => item.Titulo)</label>
+                    }
                 </div>
                 <button class="btn btn-light edit" data-id="@item.TarefaId">Editar</button>
                 <button class="btn btn-light delete" data-id="@item.TarefaId">Apagar</button>
@@ -41,6 +56,34 @@
                     var id = $(this).attr("data-id");
                     $("#modal").load("/Tarefas/Delete?id=" + id, function () {
                         $("#modal").modal('show');
+                    })
+                });
+
+                $(".custom-control-input").click(function () {
+                    var id = $(this).attr("data-id");
+                    var concluido = $(this).val();
+                    if (concluido == "False") { concluido = true } else { concluido = false }
+                    $.ajax({
+                        url: "/Tarefas/Concluido"
+                        ,
+                        type: "POST"
+                        ,
+                        data: JSON.stringify({
+                            id: id
+                            ,
+                            concluida: concluido
+                        })
+                        ,
+                        contentType: 'application/json; charset=utf-8'
+                        ,
+                        success: function () {
+                            window.location = "/Tarefas"
+                        }
+                        ,
+                        error: function (e) {
+                            console.log(e)
+                            showError(e.responseText)
+                        }
                     })
                 });
             })

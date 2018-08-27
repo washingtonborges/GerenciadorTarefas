@@ -35,3 +35,7 @@
     color: #212529 !important;
     font-weight: bold;
 }
+
+.texto-riscado {
+    text-decoration: line-through;
+}

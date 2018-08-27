@@ -118,6 +118,20 @@ namespace GerenciadorTarefas
             return RedirectToAction("Index");
         }
 
+        //POST: Tarefas/Concluido/ 
+        [HttpPost]
+        public async Task<ActionResult> Concluido(int id, bool concluida)
+        {
+            Tarefa tarefa = db.Tarefa.Find(id);
+            tarefa.Concluida = concluida;
+            if (ModelState.IsValid)
+            {
+                db.Entry(tarefa).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
