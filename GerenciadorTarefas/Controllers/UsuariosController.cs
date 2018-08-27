@@ -12,6 +12,7 @@ using GerenciadorTarefas.Models;
 
 namespace GerenciadorTarefas.Controllers
 {
+    [Authorize]
     public class UsuariosController : Controller
     {
         private GerenciadorTarefasContext db = new GerenciadorTarefasContext();
