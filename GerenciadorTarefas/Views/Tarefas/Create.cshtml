@@ -1,12 +1,10 @@
 ﻿@model GerenciadorTarefas.Models.Tarefa
-
-@{
-    ViewBag.Title = "Create";
-}
-<div class="modal-dialog">
+<!-- Modal -->
+<div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="TituloModalCentralizado">Nova Tarefa</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -27,14 +25,14 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-default" />
+                            <input type="submit" value="Inserir" class="btn btn-default" />
                         </div>
                     </div>
                 </div>
             }
         </div>
-    </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
+    </div>
+</div>
 @section scripts{
     <script>
         $(function () {
