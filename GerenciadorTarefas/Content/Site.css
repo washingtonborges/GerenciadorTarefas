@@ -23,3 +23,6 @@
     padding: 15px;
     margin: 0 auto;
 }
+.modal-title, .modal-body {
+    color: #212529 !important;
+}
