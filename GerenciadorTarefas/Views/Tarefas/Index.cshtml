@@ -5,10 +5,7 @@
 }
 
 <h2>Tarefas</h2>
-
-<p>
-    @Html.ActionLink("Nova Tarefa", "Create")
-</p>
+<button class="btn btn-light create" >Nova Tarefa</button>
 <table class="table">
     <tr>
         <th>
@@ -43,6 +40,11 @@
             $(".edit").click(function () {
                 var id = $(this).attr("data-id");
                 $("#modal").load("/Tarefas/Edit?id=" + id, function () {
+                    $("#modal").modal('show');
+                })
+            });
+            $(".create").click(function () {
+                $("#modal").load("/Tarefas/Create", function () {
                     $("#modal").modal('show');
                 })
             });
