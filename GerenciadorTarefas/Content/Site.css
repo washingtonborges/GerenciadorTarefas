@@ -26,3 +26,11 @@
 .modal-title, .modal-body {
     color: #212529 !important;
 }
+
+.card {
+    margin: 15px;
+}
+
+.card-title {
+    color: #212529 !important;
+}

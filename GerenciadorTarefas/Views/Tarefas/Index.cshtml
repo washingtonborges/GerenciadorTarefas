@@ -6,55 +6,40 @@
 
 <h2>Tarefas</h2>
 <button class="btn btn-light create">Nova Tarefa</button>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Titulo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Concluida)
-        </th>
-        <th></th>
-    </tr>
-
+<div class="row">
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titulo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Concluida)
-            </td>
-            <td>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Titulo)</h5>
                 <button class="btn btn-light edit" data-id="@item.TarefaId">Editar</button>
                 <button class="btn btn-light delete" data-id="@item.TarefaId">Apagar</button>
-            </td>
-        </tr>
+            </div>
+        </div>
     }
-</table>
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="TituloModal" aria-hidden="true">
 </div>
-@section scripts{
-    <script>
-        $(function () {
-            $(".edit").click(function () {
-                var id = $(this).attr("data-id");
-                $("#modal").load("/Tarefas/Edit?id=" + id, function () {
-                    $("#modal").modal('show');
-                })
-            });
-            $(".create").click(function () {
-                $("#modal").load("/Tarefas/Create", function () {
-                    $("#modal").modal('show');
-                })
-            });
-            $(".delete").click(function () {
-                var id = $(this).attr("data-id");
-                $("#modal").load("/Tarefas/Delete?id=" + id, function () {
-                    $("#modal").modal('show');
-                })
-            });
-        })
-    </script>
-}
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="TituloModal" aria-hidden="true">
+    </div>
+    @section scripts{
+        <script>
+            $(function () {
+                $(".edit").click(function () {
+                    var id = $(this).attr("data-id");
+                    $("#modal").load("/Tarefas/Edit?id=" + id, function () {
+                        $("#modal").modal('show');
+                    })
+                });
+                $(".create").click(function () {
+                    $("#modal").load("/Tarefas/Create", function () {
+                        $("#modal").modal('show');
+                    })
+                });
+                $(".delete").click(function () {
+                    var id = $(this).attr("data-id");
+                    $("#modal").load("/Tarefas/Delete?id=" + id, function () {
+                        $("#modal").modal('show');
+                    })
+                });
+            })
+        </script>
+    }
