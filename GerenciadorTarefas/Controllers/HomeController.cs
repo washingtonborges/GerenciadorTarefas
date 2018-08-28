@@ -9,33 +9,45 @@ using System.Web.Security;
 
 namespace GerenciadorTarefas.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private GerenciadorTarefasContext db = new GerenciadorTarefasContext();
 
         // GET: /Home/
-        [Authorize]
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return RedirectToAction("Index", "Tarefas");
         }
 
         //GET: /TelaLogin/
+        [AllowAnonymous]
         public ActionResult TelaLogin()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public JsonResult Login(string nome, string senha)
         {
             try
             {
-                var consulta = db.Usuario.Where(u => u.Nome == nome && u.Senha == senha );
+                Usuario usuario = db.Usuario.FirstOrDefault(u => u.Nome == nome && u.Senha == senha );
 
-                if (consulta.Any())
+                if (usuario != null)
                 {
                     var persistCookie = true;
-                    FormsAuthentication.SetAuthCookie(nome, persistCookie);
+                    var userData = usuario.UsuarioId.ToString();
+                    FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
+                        usuario.Nome,
+                        DateTime.Now,
+                        DateTime.Now.AddMinutes(10),
+                        persistCookie,
+                        userData,
+                        FormsAuthentication.FormsCookiePath);
+                    string encryptTicket = FormsAuthentication.Encrypt(ticket);
+                    Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encryptTicket));
                 }
                 else
                 {
@@ -50,10 +62,18 @@ namespace GerenciadorTarefas.Controllers
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
 
+        [AllowAnonymous]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return View("TelaLogin");
+        }
+
+        //GET: /AcessoNegado/
+        [AllowAnonymous]
+        public ActionResult AcessoNegado()
+        {
+            return View();
         }
     }
 
