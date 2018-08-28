@@ -1,22 +1,23 @@
 ﻿@model IEnumerable<GerenciadorTarefas.Models.Usuario>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Usuários";
 }
 
 <h2>Usuários</h2>
 <button class="btn btn-light create">Novo Usuário</button>
-<br /><br />
+<br />
+<br />
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Perfil.Nome)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Nome)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Permissao)
         </th>
         <th></th>
     </tr>
@@ -25,13 +26,13 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Perfil.Nome)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Permissao)
             </td>
             <td>
                 <button class="btn btn-light edit" data-id="@item.UsuarioId">Editar</button>
@@ -44,27 +45,28 @@
 
 <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="TituloModal" aria-hidden="true">
 </div>
+
 @section scripts{
     <script>
-            $(function () {
-                $(".edit").click(function () {
-                    var id = $(this).attr("data-id");
-                    $("#modal").load("/Usuarios/Edit?id=" + id, function () {
-                        $("#modal").modal('show');
-                    })
-                });
-                $(".create").click(function () {
-                    $("#modal").load("/Usuarios/Create", function () {
-                        $("#modal").modal('show');
-                    })
-                });
-                $(".delete").click(function () {
-                    var id = $(this).attr("data-id");
-                    $("#modal").load("/Usuarios/Delete?id=" + id, function () {
-                        $("#modal").modal('show');
-                    })
-                });
+        $(function () {
+            $(".edit").click(function () {
+                var id = $(this).attr("data-id");
+                $("#modal").load("/Usuarios/Edit?id=" + id, function () {
+                    $("#modal").modal('show');
+                })
+            });
+            $(".create").click(function () {
+                $("#modal").load("/Usuarios/Create", function () {
+                    $("#modal").modal('show');
+                })
+            });
+            $(".delete").click(function () {
+                var id = $(this).attr("data-id");
+                $("#modal").load("/Usuarios/Delete?id=" + id, function () {
+                    $("#modal").modal('show');
+                })
+            });
 
-            })
+        })
     </script>
 }
