@@ -12,7 +12,7 @@ using GerenciadorTarefas.Models;
 
 namespace GerenciadorTarefas.Controllers
 {
-    [Authorize]
+    [AuthorizeUser(Perfil="Administrador")]
     public class UsuariosController : Controller
     {
         private GerenciadorTarefasContext db = new GerenciadorTarefasContext();
@@ -20,7 +20,8 @@ namespace GerenciadorTarefas.Controllers
         // GET: Usuarios
         public async Task<ActionResult> Index()
         {
-            return View(await db.Usuario.ToListAsync());
+            var usuario = db.Usuario.Include(u => u.Perfil);
+            return View(await usuario.ToListAsync());
         }
 
         // GET: Usuarios/Details/5
@@ -41,6 +42,7 @@ namespace GerenciadorTarefas.Controllers
         // GET: Usuarios/Create
         public ActionResult Create()
         {
+            ViewBag.PerfilId = new SelectList(db.Perfil, "PerfilId", "Nome");
             return View();
         }
 
@@ -49,7 +51,7 @@ namespace GerenciadorTarefas.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "UsuarioId,Nome,Email,Permissao,Senha")] Usuario usuario)
+        public async Task<ActionResult> Create([Bind(Include = "UsuarioId,Nome,Email,Senha,PerfilId")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +60,7 @@ namespace GerenciadorTarefas.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.PerfilId = new SelectList(db.Perfil, "PerfilId", "Nome", usuario.PerfilId);
             return View(usuario);
         }
 
@@ -73,6 +76,7 @@ namespace GerenciadorTarefas.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.PerfilId = new SelectList(db.Perfil, "PerfilId", "Nome", usuario.PerfilId);
             return View(usuario);
         }
 
@@ -81,7 +85,7 @@ namespace GerenciadorTarefas.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "UsuarioId,Nome,Email,Permissao,Senha")] Usuario usuario)
+        public async Task<ActionResult> Edit([Bind(Include = "UsuarioId,Nome,Email,Senha,PerfilId")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -89,6 +93,7 @@ namespace GerenciadorTarefas.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewBag.PerfilId = new SelectList(db.Perfil, "PerfilId", "Nome", usuario.PerfilId);
             return View(usuario);
         }
 
