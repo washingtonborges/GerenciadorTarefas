@@ -11,9 +11,21 @@ namespace GerenciadorTarefas.DAL
     {
         protected override void Seed(GerenciadorTarefasContext context)
         {
+
+            var perfil = new List<Perfil>
+            {
+            new Perfil{Nome="Administrador"},
+            new Perfil{Nome="Usuário Básico"}
+            };
+
+            perfil.ForEach(s => context.Perfil.Add(s));
+            context.SaveChanges();
+
+            Perfil adminitrador = context.Perfil.FirstOrDefault(p => p.Nome == "Administrador" );
+
             var usuarios = new List<Usuario>
             {
-            new Usuario{Nome="admin", Email="admin@admin.br", Permissao="Administrador", Senha="admin"}
+            new Usuario{Nome="admin", Email="admin@admin.br",PerfilId = adminitrador.PerfilId, Perfil= adminitrador, Senha="admin"}
             };
 
             usuarios.ForEach(s => context.Usuario.Add(s));

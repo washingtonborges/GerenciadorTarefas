@@ -13,6 +13,7 @@ namespace GerenciadorTarefas.DAL
 
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Tarefa> Tarefa { get; set; }
+        public DbSet<Perfil> Perfil { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
